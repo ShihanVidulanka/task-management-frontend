@@ -1,24 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './contexts/AuthContext';
-import Register from './components/Auth/Register';
-import Login from './components/Auth/Login';
-import ProtectedRoute from './components/Auth/ProtectedRoute';
 import Home from './components/Home';
-import './index.css';  // Ensure Tailwind CSS is included
+import Login from './components/Auth/Login';
+import Register from './components/Auth/Register';
+import { AuthProvider } from './contexts/AuthContext';
 
-const App = () => {
+function App() {
   return (
     <Router>
-      <AuthProvider>
-        <Routes>
-          <Route path="/register" element={<Register/>} />
-          <Route path="/login" element={<Login/>} />
-          {/* <ProtectedRoute path="/home" element={<Home/>} /> */}
-        </Routes>
-      </AuthProvider>
+       <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+        </AuthProvider>
     </Router>
   );
-};
+}
 
 export default App;

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { register, login } from '../services/Api';
 
 const AuthContext = createContext();
@@ -6,11 +7,12 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const navigate = useNavigate();
 
   const registerUser = async (email, password) => {
     try {
       const data = await register(email, password);
-      setUser(data.user);
+      navigate('/login');
       return data;
     } catch (error) {
       throw error;
@@ -23,6 +25,7 @@ export const AuthProvider = ({ children }) => {
       setUser(data.user);
       setToken(data.token);
       localStorage.setItem('token', data.token);
+      navigate('/home');
       return data;
     } catch (error) {
       throw error;
@@ -33,6 +36,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem('token');
+    navigate('/login');
   };
 
   return (
